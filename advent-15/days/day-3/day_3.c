@@ -6,11 +6,6 @@ typedef struct {
     int y;
 } Santa;
 
-typedef struct {
-    int x;
-    int y;
-} Robo_Santa;
-
 typedef enum {
     LEFT,
     UP,
@@ -19,30 +14,37 @@ typedef enum {
 } Direction;
 
 int Travel(int maze[1000][1000], Direction *list, int list_size) {
-    Santa santa = {500, 500};
+    Santa real_santa = {500, 500};
+    Santa robo_santa = {500, 500};
+    Santa santas[2] = {real_santa, robo_santa};
+    Santa *santa;
+
     int newly_visited = 0;
 
-    for (int i = 0; i < list_size; i++) {
-        printf("%d", list[i]);
-    }
-
     for (int n = 0; n < list_size; n++) {
-        if (maze[santa.y][santa.x] == 0) {
-            newly_visited++;
-            maze[santa.y][santa.x] += 1;
+        if ((n % 2) == 0) {
+            santa = &santas[0];
+        } else {
+            santa = &santas[1];
         }
+
+        if (maze[santa->y][santa->x] == 0) {
+            newly_visited++;
+            maze[santa->y][santa->x] += 1;
+        }
+
         switch (list[n]) {
         case LEFT:
-            santa.x -= 1;
+            santa->x -= 1;
             break;
         case UP:
-            santa.y += 1;
+            santa->y += 1;
             break;
         case DOWN:
-            santa.y -= 1;
+            santa->y -= 1;
             break;
         case RIGHT:
-            santa.x += 1;
+            santa->x += 1;
             break;
         }
     }
@@ -97,5 +99,5 @@ int main() {
     int total = Travel(maze, directions, size);
 
     free(directions);
-    printf("Total Houses:%d", total);
+    printf("Total Houses:%d\n", total);
 }
