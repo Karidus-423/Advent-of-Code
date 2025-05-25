@@ -1,4 +1,1 @@
-*.out
-*.oof
-*.txt
-.direnv
+.zig-cache/

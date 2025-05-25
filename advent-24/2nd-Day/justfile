@@ -1,8 +1,0 @@
-all:run
-
-
-make:
-	zig cc ./part-2.c -o ./a.out
-
-run:make
-	./a.out
